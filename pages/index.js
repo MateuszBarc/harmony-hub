@@ -4,15 +4,24 @@ import Header from '../components/Header';
 import Link from 'next/link';
 import axios from 'axios'; // import biblioteki Axios do wykonywania zapytan http
 import { useState } from 'react'; //  hook 'useState' z React , pozwala na korzystanie ze stanu w komponencie funkcyjnym
+import Playlisty from '../components/Playlist';
 
 
 
 export default function Home({ searchData }) { // dane poczatkowe 'searchData' - na starcie puste
-  const [searchTerm, setSearchTerm] = useState(''); 
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-// 'useState' hook React , ktory pozwala na korzystanie ze stanu w komponencie funkcyjnym.
-// 'searchTerm' przechowuje aktualny wpisany termin wyszukiwania
-// 'searchResult' przechowuje wyniki wyszukiwania
+  // 'useState' hook React , ktory pozwala na korzystanie ze stanu w komponencie funkcyjnym.
+  // 'searchTerm' przechowuje aktualny wpisany termin wyszukiwania
+  // 'searchResult' przechowuje wyniki wyszukiwania
+  const [playlists, setPlaylists] = useState([]);
+  const [newPlaylistName, setNewPlaylistName] = useState('');
+  const [selectedSong, setSelectedSong] = useState(null);
+  // 'platlists' przechowuje listę playlist, która jest dynamicznie aktualizowana w miarę dodawania nowych playlist.
+  // 'newPlaylistName' przechowuje nazwę nowej playlisty wprowadzoną przez użytkownika w inpucie.
+  //'selectedSong' stan do przechowywania wybranej piosenki, która ma zostać dodana do playlisty
+
+
   const handleSearch = async () => {
     try {
       const response = await axios.get(
@@ -24,12 +33,43 @@ export default function Home({ searchData }) { // dane poczatkowe 'searchData' -
       console.error('Error fetching data from iTunes API:', error.message);
       setSearchResults([]);
     }
- // 'handleSearch' to funkcja wywolywana po nacisnieciu przycisku "Szukaj"
- // wysyła zapytanie do iTunes API w zaleznosci od aktualnego 'searchTerm'
- // i aktualizuje 'searchResults' z wynikami wyszukiwania
+    // 'handleSearch' to funkcja wywolywana po nacisnieciu przycisku "Szukaj"
+    // wysyła zapytanie do iTunes API w zaleznosci od aktualnego 'searchTerm'
+    // i aktualizuje 'searchResults' z wynikami wyszukiwania
 
   };
 
+  const handleCreatePlayliste = () => {
+    if (newPlaylistName.trim() !== '') { // sprawdzanie czy input jest pusty
+      const newPlaylist = { name: newPlaylistName, tracks: [] };
+      setPlaylists([...playlists, newPlaylist]);
+      setNewPlaylistName(''); // Czyszczenie inputu po dodaniu playlisty
+    }
+  }
+  // FUNKDCJA handleCreatePlaylist Funkcja tworząca playliste
+
+  const handleAddToPlaylist = (song) => {
+    if (selectedSong !== null) {
+      const selectedPlaylistName = prompt("Podaj nazwę playlisty, do której chcesz dodać utwór:");
+
+      if (selectedPlaylistName !== null) {
+        const playlistIndex = playlists.findIndex(playlist => playlist.name === selectedPlaylistName);
+
+        if (playlistIndex !== -1) {
+          const updatedPlaylists = [...playlists]; // tworzenie kopi playtlisty
+          updatedPlaylists[playlistIndex].tracks.push(song); // pushowanie kawalka do playlisty
+          setPlaylists(updatedPlaylists); // aktulizacjas stanu komponentu playlists
+          console.log("Dodano utwór do playlisty:", song);
+        } else {
+          alert(`Nie znaleziono playlisty o nazwie: ${selectedPlaylistName}`);
+        }
+      } else {
+        console.log("Anulowano dodawanie do playlisty.");
+      }
+    } else {
+      console.log("Nie wybrano utworu do dodania do playlisty.");
+    }
+  };
   return (
     <div>
       <Header /> {/* Tutaj Karolku jest Menu Nawigacyjne z Logiem*/}
@@ -43,15 +83,31 @@ export default function Home({ searchData }) { // dane poczatkowe 'searchData' -
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+
             <button onClick={handleSearch}>Szukaj</button>
+            <br />
+            <input
+              placeholder="Nazwa nowej playlisty"
+              type="text"
+              style={{ textAlign: 'center', width: '300px', height: '40px' }}
+              value={newPlaylistName}
+              onChange={(e) => setNewPlaylistName(e.target.value)}
+            /> {/* Input z metoda tworzenia nowych playlist */}
+            <button onClick={handleCreatePlayliste}>Stwórz playlistę</button> {/* Button z metoda tworzenia playlisty */}
+            <Playlisty playlists={playlists} />
+
+
+
             {searchResults.map((item) => (
-              <article key={item.trackId}> 
+              <article key={item.trackId}>
                 <img src={item.artworkUrl100} alt={item.trackName} />
                 <h4>{item.artistName}</h4>
                 <h4>{item.trackName}</h4>
                 <audio controls>
                   <source src={item.previewUrl} />
                 </audio>
+                <button onClick={() => { setSelectedSong(item); handleAddToPlaylist(item); }}>Dodaj do playlisty</button>
+
               </article>
             ))}
             {/*
