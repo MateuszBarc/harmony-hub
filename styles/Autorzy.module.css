@@ -1,0 +1,21 @@
+.title {
+    text-align: center;
+}
+
+.authorContainer {
+    display: flex;
+    justify-content: space-around;
+}
+
+.author {
+    text-align: center;
+}
+
+.authorImage {
+    width: 150px;
+    /* Dostosuj szerokość obrazu według potrzeb */
+    height: 150px;
+    /* Dostosuj wysokość obrazu według potrzeb */
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
