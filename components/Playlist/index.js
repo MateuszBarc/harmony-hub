@@ -1,12 +1,14 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import styles from '../../styles/page.module.css';
+
 
 const Playlisty = ({ playlists: initialPlaylists = [] }) => {
 
     return (
         <div>
 
-            <h1 style={{ textAlign: 'center' }}>Twoje Playlisty</h1>
+            <h1 className={styles.heading}>Twoje Playlisty</h1>
 
             {/* Tutaj Karolku Komponent z playlistami */}
             <div>

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import harmonyHubBg from '../public/HarmonyHubTlo.jpg';
 import styles from '../styles/page.module.css';
 import Header from '../components/Header';
 import Link from 'next/link';
@@ -88,9 +89,17 @@ export default function Home({ searchData }) { // dane poczatkowe 'searchData' -
     <div>
       <Header /> {/* Tutaj Karolku jest Menu Nawigacyjne z Logiem*/}
       <main className={styles.main}>
-        <div className={styles.description}>
+        <Image
+          className={styles.backgroundImage}
+          src={harmonyHubBg}
+          alt="Harmony Hub Background"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+        />
+        <div className={styles.center}>
           <div>
-            <h1 style={{ textAlign: 'center' }}>Wyszukiwarka</h1>
+            <h1 className={styles.heading}>Wyszukiwarka</h1>
             <input placeholder="Wpisz Utwór/Artyste/Gatunek"
               type="text"
               style={{ textAlign: 'center', width: '300px', height: '40px' }}
@@ -143,12 +152,12 @@ export default function Home({ searchData }) { // dane poczatkowe 'searchData' -
 
         <div className={styles.center}>
           <Image
-            className={styles.logo}
-            src="/HarmonyHubBG.jpg"
-            alt="Next.js Logo"
-            width={450}
-            height={250}
-            priority
+            className={styles.backgroundImage}
+            src={harmonyHubBg}
+            alt="Harmony Hub Background"
+            layout="fill"
+            objectFit="cover"
+            quality={100}
           />
         </div>
 

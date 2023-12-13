@@ -17,9 +17,6 @@ const Header = () => {
                 <Link href="/">
                     Strona Główna
                 </Link>
-                <Link href="/playlisty">
-                    Twoje playlisty
-                </Link>
                 <Link href="/autorzy">
                     Autorzy
                 </Link>
