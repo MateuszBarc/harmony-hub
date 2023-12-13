@@ -19,7 +19,7 @@ const Autorzy = () => {
                 <div className={styles.author}>
                     <img src="/karollogo.jpg" alt="Karol" className={styles.authorImage} />
                     <h2> Karol </h2>
-                    <p>Cześć! Jestem Karol, trochę taki elektronik z Rzeszowa. Przebrnąłem przez Technikum Elektroniczne, gdzie zdobyłem tytuł technika.Elektrotechnika to moje klimaty, a informatyka to taka druga natura.
+                    <p>Cześć! Jestem Karol, trochę taki elektronik z Rzeszowa. Ukończyłem Technikum Elektroniczne, gdzie zdobyłem tytuł technika.Elektrotechnika to moje klimaty, a informatyka to taka druga natura.
                         Z programowaniem zacząłem trochę ponad rok temu. No i poleciałem w świat JavaScriptu, Reacta i Next.js. Razem z ziomkami pracowaliśmy nad projektem HarmonyHub - trochę kodowania, trochę burzy mózgów, no i efekty są.
                         Mówią, że jestem rzetelny i skoncentrowany, staram się! Jak wpadam w wir kodowania, to czasem trudno mnie wyciągnąć, ale kto z nas nie ma takich chwil, prawda?</p>
                 </div>
